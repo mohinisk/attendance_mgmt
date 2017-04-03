@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include attedence_system *.css
+recursive-include attedence_system *.csv
+recursive-include attedence_system *.html
+recursive-include attedence_system *.ico
+recursive-include attedence_system *.js
+recursive-include attedence_system *.json
+recursive-include attedence_system *.md
+recursive-include attedence_system *.png
+recursive-include attedence_system *.py
+recursive-include attedence_system *.svg
+recursive-include attedence_system *.txt
+recursive-exclude attedence_system *.pyc
