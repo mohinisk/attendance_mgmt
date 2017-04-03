@@ -911,7 +911,7 @@
   "doctype": "Property Setter", 
   "doctype_or_field": "DocType", 
   "field_name": null, 
-  "modified": "2017-04-03 11:02:09.483013", 
+  "modified": "2017-04-03 16:16:14.676847", 
   "name": "Attendance-read_only_onload", 
   "property": "read_only_onload", 
   "property_type": "Check", 

@@ -21,8 +21,12 @@ frappe.ui.form.on("Attendance", "validate", function(frm, dt, dn) {
 		total_time_spent += seconds;
 		
 	})
-	var a = convert_hhmmss(total_time_spent);
-	frappe.model.set_value(dt, dn, "total_working_", a);
+	var hhmmss = convert_hhmmss(total_time_spent);
+
+	frappe.model.set_value(dt, dn, "total_working_", hhmmss);
+
+	
+
 	
 });
 
