@@ -4,9 +4,18 @@
 
 frappe.ui.form.on("Attendance", "validate", function(frm, dt, dn) {
 
+	// leave_status();
+
 	var total_time_spent = 0;
 
 	$.each(cur_frm.doc.timesheet,function(i,d){
+
+		if(d.in_time && d.out_time){	
+			if(d.in_time > d.out_time){
+				msgprint(__("Start Time should not be greater than End Time"));
+				validated = false;
+			}
+		}	
 
   		var diff =  moment.utc(moment(d.out_time,"HH:mm:ss").diff(moment(d.in_time,"HH:mm:ss"))).format("HH:mm:ss")
 		
@@ -21,11 +30,12 @@ frappe.ui.form.on("Attendance", "validate", function(frm, dt, dn) {
 		total_time_spent += seconds;
 		
 	})
-	var hhmmss = convert_hhmmss(total_time_spent);
+	var hh_mm_ss = convert_hhmmss(total_time_spent);
 
-	frappe.model.set_value(dt, dn, "total_working_", hhmmss);
+	frappe.model.set_value(dt, dn, "total_working_", hh_mm_ss );
 
-	
+	var hours = get_hours(hh_mm_ss);
+
 
 	
 });
@@ -43,7 +53,20 @@ convert_hhmmss = function(total_time_spent) {
 		    result += ":" + (m < 10 ? "0" + m : m);
 		    result += ":" + (s < 10 ? "0" + s : s);
 
-  		return result;
+  		return result;  			
+},
 
-  			
+get_hours = function(hh_mm_ss){
+	
+	if (hh_mm_ss.value !== ""){
+		var hours = hh_mm_ss.split(":")[0];
+		return hours;
+	}
+},
+
+leave_status = function(frm){
+		frappe.call({
+				method: "attedence_system.customization.attendance.attendance.leave_status"
+		})
+				
 	}
