@@ -19,16 +19,22 @@ class AttendanceLog(Document):
 
 		set_employee_name(self)
 
+	
 	def check_leave_record(self):
+		#this is done to check if employee applied has applied for half-day leave or leave
+		#while creating Attendance Log
 		if self.status == 'Present':
-			leave = frappe.db.sql("""select name from `tabLeave Application`
+			leave = frappe.db.sql("""select name,  half_day  from `tabLeave Application`
 				where employee = %s and %s between from_date and to_date and status = 'Approved'
-				and docstatus = 1""", (self.employee, self.att_date))
-
+				and docstatus = 1""", (self.employee, self.att_date), as_dict=1)
+			
 			if leave:
-				frappe.throw(_("Employee {0} was on leave on {1}. Cannot mark attendance.").format(self.employee,
-					self.att_date))
-
+				if leave[0]["half_day"] == 1:
+					frappe.db.set(self, 'status', "Half Day")
+				else:
+					frappe.throw(_("Employee {0} was on leave on {1}. Cannot mark attendance.").format(self.employee,
+						self.att_date))
+			
 	def validate_att_date(self):
 		if getdate(self.att_date) > getdate(nowdate()):
 			frappe.throw(_("Attendance can not be marked for future dates"))
