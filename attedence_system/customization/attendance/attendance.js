@@ -4,7 +4,6 @@
 
 frappe.ui.form.on("Attendance", "validate", function(frm, dt, dn) {
 
-	// leave_status();
 
 	var total_time_spent = 0;
 
