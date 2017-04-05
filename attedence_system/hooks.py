@@ -70,17 +70,22 @@ app_license = "MIT"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-#	}
-# }
+
 
 doctype_js={
 	"Attendance":["customization/attendance/attendance.js"]
 }
+
+
+
+doc_events = {
+	"Attendance" :{
+		"before_insert": "attedence_system.customization.attendance.attendance.check_leave_records"
+		}
+}
+
+
+
 
 # Scheduled Tasks
 # ---------------
