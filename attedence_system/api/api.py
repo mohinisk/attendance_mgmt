@@ -29,24 +29,24 @@ def get_users_details(email,first_name):
 	#user.submit()
 
 @frappe.whitelist(allow_guest=True)
-def create_attendance_record(employee,att_date,time_log):
+def create_attendance_record(employee,att_date,time):
 	emp_name = frappe.db.get_value("Employee",{"name":employee},"employee_name")
 	if emp_name :
 		try:
 			attendance_doc = frappe.new_doc("Attendance")
 			attendance_doc.employee = employee
 			attendance_doc.att_date = att_date
-			
+
 			attendance_log = frappe.new_doc("Attendance Log")
 			attendance_log.employee = employee
 			attendance_log.att_date = att_date
-			attendance_log.append("time" , {
-				"time_log" : time_log
-			})
+			attendance_log.time = time
 
 			attendance_doc.save(ignore_permissions=True)
 			attendance_log.save(ignore_permissions=True)
+
 			
+
 			return "success"
 		except Exception, e:
 			print frappe.get_traceback()
