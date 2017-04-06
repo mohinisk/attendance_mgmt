@@ -92,8 +92,10 @@ doc_events = {
 
 # scheduler_events = {
 # 	"all": [
-# 		"attedence_system.tasks.all"
-# 	],
+# 		"conference_management.conference_management.doctype.conference_booking.conference_booking.conference_close",
+		
+# 	]
+# }
 # 	"daily": [
 # 		"attedence_system.tasks.daily"
 # 	],
