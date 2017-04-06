@@ -34,6 +34,7 @@ class AttendanceLog(Document):
 				else:
 					frappe.throw(_("Employee {0} was on leave on {1}. Cannot mark attendance.").format(self.employee,
 						self.att_date))
+
 			
 	def validate_att_date(self):
 		if getdate(self.att_date) > getdate(nowdate()):

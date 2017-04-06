@@ -50,9 +50,10 @@ def create_attendance_record(mac,employee,att_date,time_log):
 				attendance_log = frappe.new_doc("Attendance Log")
 				attendance_log.employee = employee
 				attendance_log.att_date = att_date
-				attendance_log.append("time" , {
-					"time_log" : time_log
-				})
+				attendance_log.time = time
+				# attendance_log.append("time" , {
+				# 	"time_log" : time_log
+				# })
 				attendance_log.save(ignore_permissions=True)
 				#attendance_doc.submit()
 				#attendance_log.submit()
@@ -60,11 +61,11 @@ def create_attendance_record(mac,employee,att_date,time_log):
 			except Exception, e:
 				print frappe.get_traceback()
 				raise e
-
 		else:
 			print "Invalid Employee ID"
 			return "Invalid Employee ID"
 	else:
+
 		return "INVALID user"
 
 # @frappe.whitelist()
