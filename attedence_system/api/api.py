@@ -38,3 +38,30 @@ def create_attendance_record(mac,employee,att_date,time):
 	else:
 
 		return "INVALID user"
+
+
+@frappe.whitelist(allow_guest=True)
+def status_absent():
+	emp_name = frappe.db.sql("""select employee, employee_name, company from `tabEmployee` where employee  NOT IN ( select employee from `tabAttendance` where att_date = "2017-04-06")""", as_dict=1)
+	
+	print "\n\n\n", emp_name 
+	if emp_name:
+		try:
+			for emp_details in emp_name:
+				print "----------\n\n\n", emp_details
+				attendance_doc = frappe.new_doc("Attendance")
+				attendance_doc.att_date = "2017-04-06"
+				attendance_doc.employee = emp_details["employee"]          
+				attendance_doc.employee_name = emp_details["employee_name"]        
+				attendance_doc.company = emp_details["company"]	         
+				attendance_doc.status = "Absent"
+				attendance_doc.save(ignore_permissions=True)
+				attendance_doc.submit()
+
+		except Exception, e:
+			print frappe.get_traceback()
+			raise e
+
+
+	
+
