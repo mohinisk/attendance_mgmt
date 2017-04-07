@@ -58,3 +58,10 @@ class AttendanceLog(Document):
 		# while uploading employee attendance
 		employee_name = frappe.db.get_value("Employee", self.employee, "employee_name")
 		frappe.db.set(self, 'employee_name', employee_name)
+
+@frappe.whitelist()
+def status_absent():
+	emp_name = frappe.db.sql("""select employee from `tabEmployee` where employee  NOT IN ( select employee from `tabAttendance` where att_date = "2017-04-06")""")
+	print "\n\n\n", emp_name
+	# if emp_name:
+	# 	frappe.db.set(self, 'status', "Absent")
